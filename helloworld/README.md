@@ -14,7 +14,7 @@ $ envchain --set slack SLACK_CHANNEL
 # python-lambda-local
 
 ```sh
-   envchain slack python-lambda-local -f lambda_handler lambda.py event.json
+$ envchain slack python-lambda-local -f lambda_handler lambda.py event.json
 [root - INFO - 2019-05-03 21:36:15,339] Event: {}
 [root - INFO - 2019-05-03 21:36:15,340] START RequestId: 0f9e73be-e070-4011-bec7-c30adff2dbc6 Version:
 [root - INFO - 2019-05-03 21:36:15,788] END RequestId: 0f9e73be-e070-4011-bec7-c30adff2dbc6
