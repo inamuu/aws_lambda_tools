@@ -1,12 +1,24 @@
-# Test
+# Set environment using envchain.
+
+See https://techlife.cookpad.com/entry/envchain
 
 ```sh
-   python-lambda-local -f main main.py event.json
-[root - INFO - 2019-05-03 17:35:55,450] Event: {}
-[root - INFO - 2019-05-03 17:35:55,450] START RequestId: 19acf5ee-6b9a-4cad-b877-163d2846f1be Version:
-hello world
-[root - INFO - 2019-05-03 17:35:55,499] END RequestId: 19acf5ee-6b9a-4cad-b877-163d2846f1be
-[root - INFO - 2019-05-03 17:35:55,499] REPORT RequestId: 19acf5ee-6b9a-4cad-b877-163d2846f1be  Duration: 4.25 ms
-[root - INFO - 2019-05-03 17:35:55,499] RESULT:
+$ brew install https://raw.githubusercontent.com/sorah/envchain/master/brew/envchain.rb
+```
+
+```sh
+$ envchain --set slack SLACK_POSTURL
+$ envchain --set slack SLACK_CHANNEL
+```
+
+# python-lambda-local
+
+```sh
+   envchain slack python-lambda-local -f lambda_handler lambda.py event.json
+[root - INFO - 2019-05-03 21:36:15,339] Event: {}
+[root - INFO - 2019-05-03 21:36:15,340] START RequestId: 0f9e73be-e070-4011-bec7-c30adff2dbc6 Version:
+[root - INFO - 2019-05-03 21:36:15,788] END RequestId: 0f9e73be-e070-4011-bec7-c30adff2dbc6
+[root - INFO - 2019-05-03 21:36:15,788] REPORT RequestId: 0f9e73be-e070-4011-bec7-c30adff2dbc6  Duration: 403.88 ms
+[root - INFO - 2019-05-03 21:36:15,789] RESULT:
 None
 ```
