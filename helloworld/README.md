@@ -11,7 +11,9 @@ $ envchain --set slack SLACK_POSTURL
 $ envchain --set slack SLACK_CHANNEL
 ```
 
-# python-lambda-local
+# Test Code
+
+Run python-lambda-local
 
 ```sh
 $ envchain slack python-lambda-local -f lambda_handler lambda.py event.json
@@ -21,4 +23,10 @@ $ envchain slack python-lambda-local -f lambda_handler lambda.py event.json
 [root - INFO - 2019-05-03 21:36:15,788] REPORT RequestId: 0f9e73be-e070-4011-bec7-c30adff2dbc6  Duration: 403.88 ms
 [root - INFO - 2019-05-03 21:36:15,789] RESULT:
 None
+```
+
+# Upload code to aws lambda
+
+```sh
+$ lambda-uploader --profile=AWS_PROFILENAME
 ```
