@@ -6,5 +6,9 @@
     "runtime": "python3.7",
     "role": "arn:aws:iam::111111111111:role/MyLambdaExecRole",
     "timeout": 300,
-    "memory": 128
+    "memory": 128,
+     {
+      "SLACK_POSTURL":"https://SLACKURL/XXX",
+      "SLACK_CHANNEL":"#SLACK_CHANNEL_NAME"
+    }
 }
