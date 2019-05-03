@@ -1,0 +1,9 @@
+{
+    "name": "VSCodePython",
+    "description": "using VSCode(Python)",
+    "region": "ap-northeast-1",
+    "handler": "lambda.main",
+    "role": "arn:aws:iam::111111111111:role/MyLambdaExecRole",
+    "timeout": 300,
+    "memory": 128
+}
