@@ -10,6 +10,7 @@ SLACK_CHANNEL = os.environ['SLACK_CHANNEL']
 SLACK_POSTURL = os.environ['SLACK_POSTURL']
 NOTIFY_USER = os.environ['NOTIFY_USER']
 todoistapi = TodoistAPI(os.environ['TODOISTAPITOKEN'])
+todoistapi.sync()
 
 def tasklist(name):
     list = todoistapi.state['projects']
@@ -26,15 +27,14 @@ def tasklist(name):
 
     items = todoistapi.state['items']
     slackmessage = []
-    print('### タスク一覧(id, 内容)')
+    title = "*[定期通知] プロジェクト " + name + " のタスクリスト*\n"
     for name in items:
-        if name['project_id'] == tasks_project_id:
-            taskcontent = name['content']
-            message = (str(
-                '- '
-                + taskcontent))
-            slackmessage.append(taskcontent)
-    message = '\n'.join(slackmessage)
+        if name['checked'] == 0:
+            if name['project_id'] == tasks_project_id:
+                taskcontent = '- ' + name['content']
+                #message = (str(taskcontent))
+                slackmessage.append(taskcontent)
+    message = title + '\n'.join(slackmessage)
     return message
 
 def lambda_handler(event, context):
@@ -42,7 +42,7 @@ def lambda_handler(event, context):
     msg = tasklist(name)
     slack_message = {
         'channel': SLACK_CHANNEL,
-        'icon_emoji': ":robot_face:",
+        'icon_emoji': ":todoist:",
         'text': msg,
     }
     requests.post(SLACK_POSTURL, data=json.dumps(slack_message))
