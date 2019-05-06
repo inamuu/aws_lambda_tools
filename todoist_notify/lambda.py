@@ -8,7 +8,6 @@ from todoist.api import TodoistAPI
 
 SLACK_CHANNEL = os.environ['SLACK_CHANNEL']
 SLACK_POSTURL = os.environ['SLACK_POSTURL']
-NOTIFY_USER = os.environ['NOTIFY_USER']
 todoistapi = TodoistAPI(os.environ['TODOISTAPITOKEN'])
 todoistapi.sync()
 
@@ -32,7 +31,6 @@ def tasklist(name):
         if name['checked'] == 0:
             if name['project_id'] == tasks_project_id:
                 taskcontent = '- ' + name['content']
-                #message = (str(taskcontent))
                 slackmessage.append(taskcontent)
     message = title + '\n'.join(slackmessage)
     return message
