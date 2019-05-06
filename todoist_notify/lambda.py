@@ -30,7 +30,6 @@ def tasklist(name):
     print('### タスク一覧(id, 内容)')
     for name in items:
         if name['project_id'] == tasks_project_id:
-            taskid = name['id']
             taskcontent = name['content']
             message = (str(
                 '- '
