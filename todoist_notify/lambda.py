@@ -14,7 +14,6 @@ todoistapi = TodoistAPI(os.environ['TODOISTAPITOKEN'])
 def tasklist(name):
     list = todoistapi.state['projects']
     for projects_id in list:
-        #if projects_id['name'] == args.tasks:
         if projects_id['name'] == name:
             tasks_project_id = projects_id['id']
             break
