@@ -28,10 +28,9 @@ def tasklist(name):
     items = TDIAPI.state['items']
     slackmessage = []
     for name in items:
-        if name['checked'] == 0:
-            if name['project_id'] == tasks_project_id:
-                taskcontent = '- ' + name['content']
-                slackmessage.append(taskcontent)
+        if name['checked'] == 0 and name['project_id'] == tasks_project_id:
+            taskcontent = '- ' + name['content']
+            slackmessage.append(taskcontent)
     message = '\n'.join(slackmessage)
     return message
 
