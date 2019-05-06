@@ -8,7 +8,7 @@ from todoist.api import TodoistAPI
 
 SLACK_CHANNEL = os.environ['SLACK_CHANNEL']
 SLACK_POSTURL = os.environ['SLACK_POSTURL']
-todoistapi = TodoistAPI(os.environ['TODOISTAPITOKEN'])
+todoistapi = TodoistAPI(os.environ['TODOISTAPITOKEN'], cache=False)
 todoistapi.sync()
 
 def tasklist(name):
