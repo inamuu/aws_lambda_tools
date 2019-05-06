@@ -8,11 +8,12 @@ from todoist.api import TodoistAPI
 
 SLACK_CHANNEL = os.environ['SLACK_CHANNEL']
 SLACK_POSTURL = os.environ['SLACK_POSTURL']
-todoistapi = TodoistAPI(os.environ['TODOISTAPITOKEN'], cache=False)
-todoistapi.sync()
+TDIAPI = TodoistAPI(os.environ['TODOISTAPITOKEN'], cache=False)
+TDIAPI.sync()
+name = os.environ['TODOIST_PJT']
 
 def tasklist(name):
-    list = todoistapi.state['projects']
+    list = TDIAPI.state['projects']
     for projects_id in list:
         if projects_id['name'] == name:
             tasks_project_id = projects_id['id']
@@ -24,7 +25,7 @@ def tasklist(name):
         print("プロジェクト名が正しくありません。プロジェクト名を正しく入力してください。")
         sys.exit()
 
-    items = todoistapi.state['items']
+    items = TDIAPI.state['items']
     slackmessage = []
     for name in items:
         if name['checked'] == 0:
@@ -35,7 +36,6 @@ def tasklist(name):
     return message
 
 def lambda_handler(event, context):
-    name = os.environ['TODOIST_PJT']
     msg = tasklist(name)
     title = "*[定期通知] プロジェクト " + name + " のタスクリスト*\n"
     slack_message = {
