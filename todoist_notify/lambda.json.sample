@@ -9,6 +9,8 @@
     "memory": 128,
      {
       "SLACK_POSTURL":"https://SLACKURL/XXX",
-      "SLACK_CHANNEL":"#SLACK_CHANNEL_NAME"
+      "SLACK_CHANNEL":"#SLACK_CHANNEL_NAME",
+      "TODOIST_PJT":"Inbox",
+      "TODOISTAPITOKEN": "XXXXX"
     }
 }
