@@ -1,5 +1,5 @@
 # todoist_notify with AWS lambda
-# Set environment using envchain.
+## Set environment using envchain or os environment
 
 See https://techlife.cookpad.com/entry/envchain
 
@@ -12,7 +12,7 @@ $ envchain --set slack SLACK_POSTURL
 $ envchain --set slack SLACK_CHANNEL
 ```
 
-# Test Code
+# Test
 
 Run python-lambda-local
 
@@ -26,7 +26,7 @@ $ TODOISTAPITOKEN=XXXXX envchain slack python-lambda-local -f lambda_handler lam
 None
 ```
 
-# Upload code to aws lambda
+## Upload code to aws lambda
 
 ```sh
 $ lambda-uploader --profile=AWS_PROFILENAME
