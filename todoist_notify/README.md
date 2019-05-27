@@ -1,5 +1,5 @@
 # todoist_notify with AWS lambda
-## Set environment using envchain or os environment
+## Set environment using envchain or export
 
 See https://techlife.cookpad.com/entry/envchain
 
@@ -10,6 +10,13 @@ $ brew install https://raw.githubusercontent.com/sorah/envchain/master/brew/envc
 ```sh
 $ envchain --set slack SLACK_POSTURL
 $ envchain --set slack SLACK_CHANNEL
+```
+
+Or
+
+```sh
+$ export SLACK_POSTURL=XXX
+$ export SLACK_CHANNEL=XXX
 ```
 
 ## Test
