@@ -1,0 +1,15 @@
+{
+    "name": "notify-slowquerylogs-to-slack",
+    "description": "Notify slowquerylogs to Slack",
+    "region": "ap-northeast-1",
+    "handler": "lambda.lambda_handler",
+    "runtime": "python3.7",
+    "role": "arn:aws:iam::XXXXXXXXX",
+    "timeout": 300,
+    "memory": 128,
+    "variables":
+    {
+      "SLACK_POSTURL":"XXX",
+      "SLACK_CHANNEL":"XXX"
+    }
+}
