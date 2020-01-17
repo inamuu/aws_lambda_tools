@@ -13,30 +13,38 @@ TDIAPI.sync()
 name = os.environ['TODOIST_PJT']
 
 def tasklist(name):
-    list = TDIAPI.state['projects']
-    for projects_id in list:
-        if projects_id['name'] == name:
-            tasks_project_id = projects_id['id']
-            break
 
-    try:
-        tasks_project_id
-    except NameError:
-        print("プロジェクト名が正しくありません。プロジェクト名を正しく入力してください。")
-        sys.exit()
+    #for projects_id in list:
+    #    if projects_id['name'] == name:
+    #        tasks_project_id = projects_id['id']
+    #        break
 
+    #try:
+    #    tasks_project_id
+    #except NameError:
+    #    print("プロジェクト名が正しくありません。プロジェクト名を正しく入力してください。")
+    #    sys.exit()
+
+    pjts = TDIAPI.state['projects']
     items = TDIAPI.state['items']
-    print(items[0])
-    sys.exit()
     labels = TDIAPI.state['labels']
-    #print(labels)
+    sects = TDIAPI.state['sections']
     slackmessage = []
-    for name in items:
-        if name['checked'] == 0 and name['project_id'] == tasks_project_id:
-            taskcontent = '- ' + name['content']
-            slackmessage.append(taskcontent)
-            print(taskcontent)
-            return
+
+    for item in items:
+        l_content = item['content']
+        l_pjt_id = [ pjt['name'] for pjt in pjts if item['project_id'] == pjt['id'] ]
+        l_sec_id = [ sect['name'] for sect in sects if item['section_id'] == sect['id']]
+        print('+++')
+        print(l_pjt_id)
+        print(l_content)
+        print(l_sec_id)
+        #if item['checked'] == 0 and item['project_id'] == tasks_project_id:
+
+            #taskcontent = '- ' + item['content']
+            #slackmessage.append(taskcontent)
+            #print(taskcontent)
+        #print(slackmessage)
     message = '\n'.join(slackmessage)
     return message
 
