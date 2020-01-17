@@ -6,8 +6,8 @@ import os
 import sys
 from todoist.api import TodoistAPI
 
-SLACK_CHANNEL = os.environ['SLACK_CHANNEL']
-SLACK_POSTURL = os.environ['SLACK_POSTURL']
+#SLACK_CHANNEL = os.environ['SLACK_CHANNEL']
+#SLACK_POSTURL = os.environ['SLACK_POSTURL']
 TDIAPI = TodoistAPI(os.environ['TODOISTAPITOKEN'], cache=False)
 TDIAPI.sync()
 name = os.environ['TODOIST_PJT']
@@ -26,11 +26,17 @@ def tasklist(name):
         sys.exit()
 
     items = TDIAPI.state['items']
+    print(items[0])
+    sys.exit()
+    labels = TDIAPI.state['labels']
+    #print(labels)
     slackmessage = []
     for name in items:
         if name['checked'] == 0 and name['project_id'] == tasks_project_id:
             taskcontent = '- ' + name['content']
             slackmessage.append(taskcontent)
+            print(taskcontent)
+            return
     message = '\n'.join(slackmessage)
     return message
 
@@ -52,9 +58,8 @@ def lambda_handler(event, context):
             }
         ]
     }
-    requests.post(SLACK_POSTURL, data=json.dumps(slack_message))
+    #requests.post(SLACK_POSTURL, data=json.dumps(slack_message))
 
 ## for Debug
-#if __name__ == '__main__':
-#    name = os.environ['TODOIST_PJT']
-#    tasklist(name)
+if __name__ == '__main__':
+    tasklist(name)
