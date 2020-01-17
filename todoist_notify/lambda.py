@@ -29,24 +29,34 @@ def tasklist(name):
     items = TDIAPI.state['items']
     labels = TDIAPI.state['labels']
     sects = TDIAPI.state['sections']
-    slackmessage = []
+
+    inbox_list = []
+    doing_list = []
+    review_list = []
+    any_list = []
+
+    print(labels)
+    sys.exit()
 
     for item in items:
         l_content = item['content']
-        l_pjt_id = [ pjt['name'] for pjt in pjts if item['project_id'] == pjt['id'] ]
-        l_sec_id = [ sect['name'] for sect in sects if item['section_id'] == sect['id']]
-        print('+++')
-        print(l_pjt_id)
-        print(l_content)
-        print(l_sec_id)
+        l_pjt_name = [ pjt['name'] for pjt in pjts if item['project_id'] == pjt['id'] ]
+        l_sec_name = [ sect['name'] for sect in sects if item['section_id'] == sect['id']]
+        #print('+++')
+        #print(l_pjt_id)
+        #print(l_content)
+        #print(l_sec_name[0])
+
+        if l_sec_name is not None and l_sec_name[0] == 'ToDo':
+            print(l_sec_name)
         #if item['checked'] == 0 and item['project_id'] == tasks_project_id:
 
             #taskcontent = '- ' + item['content']
             #slackmessage.append(taskcontent)
             #print(taskcontent)
         #print(slackmessage)
-    message = '\n'.join(slackmessage)
-    return message
+    #message = '\n'.join(slackmessage)
+    return
 
 def lambda_handler(event, context):
     msg = tasklist(name)
