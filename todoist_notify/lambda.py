@@ -1,8 +1,10 @@
 # coding: utf-8
 
+import datetime
 import json
 import requests
 import os
+import re
 import sys
 from todoist.api import TodoistAPI
 
@@ -10,7 +12,26 @@ from todoist.api import TodoistAPI
 #SLACK_POSTURL = os.environ['SLACK_POSTURL']
 TDIAPI = TodoistAPI(os.environ['TODOISTAPITOKEN'], cache=False)
 TDIAPI.sync()
-name = os.environ['TODOIST_PJT']
+#name = os.environ['TODOIST_PJT']
+name = 'Tasks'
+
+def activity(name):
+    actlogs = TDIAPI.activity.get()
+    pjts = TDIAPI.state['projects']
+
+    for projects_id in pjts:
+        if projects_id['name'] == name:
+            tasks_project_id = projects_id['id']
+            break
+
+    event_list = []
+    for events in actlogs['events']:
+        datetime_utc = datetime.datetime.now() - datetime.timedelta(hours = 9)
+        today = datetime_utc.strftime("%Y-%m-%d")
+
+        if events['event_type'] == 'completed' and re.sub('T.*', '' ,events['event_date']) in today and events['parent_project_id'] == tasks_project_id:
+            print(events['extra_data'])
+            event_list.append(events['extra_data']['content'])
 
 def tasklist(name):
 
@@ -80,4 +101,5 @@ def lambda_handler(event, context):
 
 ## for Debug
 if __name__ == '__main__':
-    tasklist(name)
+    #tasklist(name)
+    activity(name)
