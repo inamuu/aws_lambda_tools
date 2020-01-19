@@ -26,12 +26,19 @@ def activity(name):
 
     event_list = []
     for events in actlogs['events']:
-        datetime_utc = datetime.datetime.now() - datetime.timedelta(hours = 9)
-        today = datetime_utc.strftime("%Y-%m-%d")
+        today = datetime.datetime.now().strftime("%Y-%m-%d")
 
-        if events['event_type'] == 'completed' and re.sub('T.*', '' ,events['event_date']) in today and events['parent_project_id'] == tasks_project_id:
-            print(events['extra_data'])
+        '''
+        todoistのevent_dateはUTCで且つstringなので一度datetime型に変換して、+9時間する
+        そこから年月日だけにして、stringに戻して日本時間の今日のデータかをチェック
+        '''
+        todoist_times = datetime.datetime.strptime(events['event_date'], '%Y-%m-%dT%H:%M:%SZ') + datetime.timedelta(hours = 9)
+        todoist_date = str(todoist_times.strftime("%Y-%m-%d"))
+
+        if events['event_type'] == 'completed' and todoist_date == today and events['parent_project_id'] == tasks_project_id:
             event_list.append(events['extra_data']['content'])
+
+    return event_list
 
 def tasklist(name):
 
