@@ -1,8 +1,10 @@
 # coding: utf-8
 
+import datetime
 import json
 import requests
 import os
+import re
 import sys
 from todoist.api import TodoistAPI
 
@@ -10,7 +12,33 @@ from todoist.api import TodoistAPI
 #SLACK_POSTURL = os.environ['SLACK_POSTURL']
 TDIAPI = TodoistAPI(os.environ['TODOISTAPITOKEN'], cache=False)
 TDIAPI.sync()
-name = os.environ['TODOIST_PJT']
+#name = os.environ['TODOIST_PJT']
+name = 'Tasks'
+
+def activity(name):
+    actlogs = TDIAPI.activity.get()
+    pjts = TDIAPI.state['projects']
+
+    for projects_id in pjts:
+        if projects_id['name'] == name:
+            tasks_project_id = projects_id['id']
+            break
+
+    event_list = []
+    for events in actlogs['events']:
+        today = datetime.datetime.now().strftime("%Y-%m-%d")
+
+        '''
+        todoistのevent_dateはUTCで且つstringなので一度datetime型に変換して、+9時間する
+        そこから年月日だけにして、stringに戻して日本時間の今日のデータかをチェック
+        '''
+        todoist_times = datetime.datetime.strptime(events['event_date'], '%Y-%m-%dT%H:%M:%SZ') + datetime.timedelta(hours = 9)
+        todoist_date = str(todoist_times.strftime("%Y-%m-%d"))
+
+        if events['event_type'] == 'completed' and todoist_date == today and events['parent_project_id'] == tasks_project_id:
+            event_list.append(events['extra_data']['content'])
+
+    return event_list
 
 def tasklist(name):
 
@@ -80,4 +108,5 @@ def lambda_handler(event, context):
 
 ## for Debug
 if __name__ == '__main__':
-    tasklist(name)
+    #tasklist(name)
+    activity(name)
