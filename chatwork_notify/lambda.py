@@ -26,7 +26,8 @@ def send_message(room_lists):
     for room_list in room_lists:
         post_url = CHATWORK_API + str(room_list) + '/messages'
         params = {
-            'body': '本日の営業は終了いたしました(bow)'
+            'body': '本日の営業は終了いたしました(bow)' + '\n'
+                    'またご連絡をお待ちしております。'
             }
         headers = { 'X-ChatWorkToken': API_TOKEN }
         resp = requests.post(post_url, headers=headers, params=params)
