@@ -13,7 +13,7 @@ from todoist.api import TodoistAPI
 TDIAPI = TodoistAPI(os.environ['TODOISTAPITOKEN'], cache=False)
 TDIAPI.sync()
 #name = os.environ['TODOIST_PJT']
-name = 'Tasks'
+name = 'lancers'
 
 def activity(name):
     actlogs = TDIAPI.activity.get()
@@ -37,7 +37,7 @@ def activity(name):
 
         if events['event_type'] == 'completed' and todoist_date == today and events['parent_project_id'] == tasks_project_id:
             event_list.append(events['extra_data']['content'])
-
+    print(event_list)
     return event_list
 
 def tasklist(name):
@@ -86,8 +86,7 @@ def tasklist(name):
     #message = '\n'.join(slackmessage)
     return
 
-def lambda_handler(event, context):
-    msg = tasklist(name)
+def slack_notify():
     title = "*[定期通知] プロジェクト " + name + " のタスクリスト*\n"
     slack_message = {
         'channel': SLACK_CHANNEL,
@@ -105,6 +104,11 @@ def lambda_handler(event, context):
         ]
     }
     #requests.post(SLACK_POSTURL, data=json.dumps(slack_message))
+
+def lambda_handler(event, context):
+    #msg = tasklist(name)
+    msg = activity(name)
+    return
 
 ## for Debug
 if __name__ == '__main__':
