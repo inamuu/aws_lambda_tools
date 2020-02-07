@@ -12,8 +12,7 @@ from todoist.api import TodoistAPI
 #SLACK_POSTURL = os.environ['SLACK_POSTURL']
 TDIAPI = TodoistAPI(os.environ['TODOISTAPITOKEN'], cache=False)
 TDIAPI.sync()
-#name = os.environ['TODOIST_PJT']
-name = 'lancers'
+name = os.environ['TODOIST_PJT']
 
 def activity(name):
     actlogs = TDIAPI.activity.get()
@@ -111,6 +110,6 @@ def lambda_handler(event, context):
     return
 
 ## for Debug
-if __name__ == '__main__':
+#if __name__ == '__main__':
     #tasklist(name)
-    activity(name)
+    #activity(name)
