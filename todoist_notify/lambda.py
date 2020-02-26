@@ -14,6 +14,11 @@ TDIAPI = TodoistAPI(os.environ['TODOISTAPITOKEN'], cache=False)
 TDIAPI.sync()
 name = os.environ['TODOIST_PJT']
 
+def lambda_handler(event, context):
+    #msg = tasklist(name)
+    msg = activity(name)
+    return
+
 def activity(name):
     actlogs = TDIAPI.activity.get()
     pjts = TDIAPI.state['projects']
@@ -22,6 +27,8 @@ def activity(name):
         if projects_id['name'] == name:
             tasks_project_id = projects_id['id']
             break
+        else:
+            print('[INFO] Not match project name')
 
     event_list = []
     for events in actlogs['events']:
@@ -103,13 +110,3 @@ def slack_notify():
         ]
     }
     #requests.post(SLACK_POSTURL, data=json.dumps(slack_message))
-
-def lambda_handler(event, context):
-    #msg = tasklist(name)
-    msg = activity(name)
-    return
-
-## for Debug
-#if __name__ == '__main__':
-    #tasklist(name)
-    #activity(name)
