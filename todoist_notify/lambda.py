@@ -15,8 +15,10 @@ TDIAPI.sync()
 name = os.environ['TODOIST_PJT']
 
 def lambda_handler(event, context):
-    #msg = tasklist(name)
-    msg = activity(name)
+    if event["function"] == 'tasklist':
+        msg = tasklist(name)
+    if event["function"] == 'activity':
+        msg = activity(name)
     return
 
 def activity(name):
@@ -43,21 +45,11 @@ def activity(name):
 
         if events['event_type'] == 'completed' and todoist_date == today and events['parent_project_id'] == tasks_project_id:
             event_list.append(events['extra_data']['content'])
+
     print(event_list)
     return event_list
 
 def tasklist(name):
-
-    #for projects_id in list:
-    #    if projects_id['name'] == name:
-    #        tasks_project_id = projects_id['id']
-    #        break
-
-    #try:
-    #    tasks_project_id
-    #except NameError:
-    #    print("プロジェクト名が正しくありません。プロジェクト名を正しく入力してください。")
-    #    sys.exit()
 
     pjts = TDIAPI.state['projects']
     items = TDIAPI.state['items']
@@ -68,6 +60,17 @@ def tasklist(name):
     doing_list = []
     review_list = []
     any_list = []
+
+    for projects_id in list:
+        if projects_id['name'] == name:
+            tasks_project_id = projects_id['id']
+            break
+
+    try:
+        tasks_project_id
+    except NameError:
+        print("プロジェクト名が正しくありません。プロジェクト名を正しく入力してください。")
+        return
 
     print(labels)
     sys.exit()
